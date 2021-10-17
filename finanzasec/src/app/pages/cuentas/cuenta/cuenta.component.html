@@ -1,0 +1,15 @@
+<h3 class="text-center">{{titulo}}</h3>
+<form (ngSubmit)="guardar()" [formGroup]="formulario">
+    <div class="row">
+        <div class="col">
+            <label class="control-label">Descripcion</label>
+            <input formControlName="descripcion" type="text" class="form-control">
+            <small *ngIf="fs.validar('descripcion')" class="text-danger">Debe ingresar minimo 5 caracteres</small>
+        </div>
+    </div>
+    <br>
+    <div class="text-right">
+        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
+    </div>
+
+</form>

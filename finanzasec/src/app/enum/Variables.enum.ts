@@ -1,0 +1,5 @@
+export enum Variables{
+  TOKEN_LOCALSTORAGE ='TOKEN_LOCALSTORAGE',
+  TOKEN2 ='TOKEN2',
+
+}

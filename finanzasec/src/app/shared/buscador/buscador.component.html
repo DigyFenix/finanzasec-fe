@@ -1,0 +1,16 @@
+<div class="animated fadeIn fast">
+    <div class="row">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Buscar..." #txtTermino (keyup)="buscar(txtTermino.value)" />
+        </div>
+        <div *ngIf="botonNuevo" class="col-2">
+            <div class="text-right">
+                <button class="btn btn-primary" (click)="nuevoRegistro()">
+                  <i class="fa fa-file"></i>
+                  Nuevo
+              </button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
