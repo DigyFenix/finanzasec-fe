@@ -1,1 +1,56 @@
-<p>subcategorias works!</p>
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-5 fw-normal">Sub categorias</h1>
+    <p class="fs-6 text-muted">
+        Las subcategorias pertenecen a una categoria y sirven para detallar mas el tipo de ingreso/egreso, ejemplo, si la categoria es Comida, se pueden crear subcategorias como; Almuezo, Cena, etc. En ella se especifica si el tipo es ingreso o egreso.
+    </p>
+</div>
+
+<!-- Loading para cuando se esta procesando algo -->
+<app-loading *ngIf="cargando"></app-loading>
+
+<!-- Formulario principal donde se muestrar todos los registros -->
+<form [formGroup]="formulario" *ngIf="!editar">
+    <div class="col col-md col-sm">
+        <label for="country" class="form-label">Categorias</label>
+        <select class="form-select" formControlName="id" required>
+          <option *ngFor="let categoria of categorias; let i = index" [value]="i" >{{categoria.descripcion}}</option>
+        </select>
+    </div>
+    <hr>
+    <!-- Buscador -->
+    <app-buscador (busqueda)="buscar($event)" (nuevo)="nuevoEditar()"></app-buscador>
+
+    <!-- Tabla -->
+    <div class="table-responsive">
+
+
+        <table class="table color-bordered-table inverse-bordered-table">
+            <thead>
+                <tr>
+                    <th>Descripcion</th>
+                    <th>Controles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let subcat of subcategorias">
+                    <td>{{subcat.descripcion}}</td>
+                    <td>
+                        <button class="btn btn-outline-primary mr-1" (click)="nuevoEditar(subcat)"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-outline-danger" (click)="eliminarRegistro(subcat)"><i class="fa fa-close"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Fin Tabla -->
+</form>
+<!-- Fin Formulario principal donde se muestrar todos los registros -->
+
+<!-- Formulario de nuevo/edicion -->
+<div *ngIf="editar">
+    <app-regresar (regresar)="editar=!editar"></app-regresar>
+
+    <app-subcategoria [subcategoria]="subcategoria" [categoria]="categoria" (guardado)='guardado($event)'></app-subcategoria>
+
+</div>
+<!-- Fin Formulario de nuevo/edicion -->

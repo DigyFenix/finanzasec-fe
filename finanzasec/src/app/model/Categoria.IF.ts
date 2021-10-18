@@ -2,14 +2,16 @@ export default class Categoria {
   static instance(obj: any) {
     return new this(
       obj['id'],
-      obj['idcuenta'],
-      obj['descripcion']
+      obj['cuenta'],
+      obj['descripcion'],
+      obj['descripcionCuenta']
     )
   }
 
   public constructor(
     public id: string,
-    public idcuenta: string,
+    public cuenta: string,
     public descripcion?: string,
+    public descripcionCuenta?: string
   ) { }
 };

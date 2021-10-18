@@ -7,5 +7,6 @@ export enum EndPoint {
   CATEGORIA = 'categoria',
   SUBCATEGORIA = 'subcategoria',
   MOVIMIENTO = 'movimiento',
-  REPORTE = 'reporte'
+  REPORTE = 'reporte',
+  USUARIO = 'usuario'
 }

@@ -35,7 +35,7 @@ export class InterceptorapiService implements HttpInterceptor {
 
   //Los errores de las peticiones pasaran por aqui, por lo que se pueden guardar en algun log.
   manejarError(error: HttpErrorResponse) {
-    return throwError(error['error']['error'])
+    return throwError(error['error'])
   }
 
 }

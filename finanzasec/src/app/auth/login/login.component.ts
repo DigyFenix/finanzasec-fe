@@ -26,12 +26,12 @@ export class LoginComponent implements OnInit {
     this.socialAuthService.authState.subscribe((user) => {
       // let data = { token: user.idToken }
       let data = { token: user.idToken }
-      this.api.login(data).subscribe((data) => {
+      this.api.log('Token google', data)
+      this.api.iniciarSesion(data).subscribe((data) => {
         if (data.ok) {
           let obj:any = data.data;
+          this.api.log('Response login!!', obj)
           localStorage.setItem(Variables.TOKEN_LOCALSTORAGE, '' +  obj["token"]);
-          this.api.usuario = Usuario.instance(obj['usuario']);
-          localStorage.setItem(Variables.TOKEN2, '' + this.api.usuario.idusuario);
           this.router.navigateByUrl('/' + EndPoint.PERFIL);
         } else {
           this.sa.error('Error al iniciar sesion', JSON.stringify(data.error))

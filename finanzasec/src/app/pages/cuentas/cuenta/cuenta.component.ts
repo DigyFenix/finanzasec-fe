@@ -24,10 +24,11 @@ export class CuentaComponent implements OnInit {
   formulario: FormGroup = this.fs.fb.group(
     {
       id: [,],
+      usuario: [,],
       descripcion: [, [Validators.required, Validators.minLength(3)]]
     });
 
-  constructor(private apiS: ApiService, private sa: SaService, public fs: FormsService) {
+  constructor(private api: ApiService, private sa: SaService, public fs: FormsService) {
     this.cuenta = Cuenta.instance('');
   }
 
@@ -54,8 +55,8 @@ export class CuentaComponent implements OnInit {
       this.sa.error('', 'Formulario invalido');
       return;
     }
-
-    this.apiS.insertarActualizar(this.endPoint, this.cuenta).subscribe(resp => {
+    this.extraerID();
+    this.api.insertarActualizar(this.endPoint, this.cuenta).subscribe(resp => {
       if (resp.ok) {
         this.sa.realizado('Datos guardados', '');
         this.guardado.emit(true);
@@ -65,5 +66,11 @@ export class CuentaComponent implements OnInit {
     }, (error) => {
       this.sa.error('Error', error)
     });
+  }
+
+  extraerID() {
+    if (typeof this.cuenta.usuario === 'object') {
+      this.cuenta.usuario = JSON.parse(JSON.stringify(this.cuenta.usuario.id))
+    }
   }
 }

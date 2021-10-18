@@ -1,8 +1,8 @@
-export default class SubCategoriaInterface {
+export default class SubCategoria {
   static instance(obj: any) {
     return new this(
       obj['id'],
-      obj['idcategoria'],
+      obj['categoria'],
       obj['descripcion'],
       obj['tipo']
     )
@@ -10,7 +10,7 @@ export default class SubCategoriaInterface {
 
   public constructor(
     public id: string,
-    public idcuenta: string,
+    public categoria: string,
     public descripcion?: string,
     public tipo?: string
   ) { }

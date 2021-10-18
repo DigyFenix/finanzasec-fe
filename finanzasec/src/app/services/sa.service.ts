@@ -11,8 +11,13 @@ export class SaService {
 
 
   private alertBasico(icono: SweetAlertIcon, titulo: string, mensaje: string = '') {
-
-    Swal.fire(titulo,  (mensaje.length>0 ? JSON.stringify(mensaje) :''), icono);
+    let str;
+    if (typeof mensaje === 'object') {
+      str = JSON.stringify(mensaje);
+    } else {
+      str = mensaje;
+    }
+    Swal.fire(titulo, str, icono);
   }
 
   realizado(titulo: string, mensaje?: string) {

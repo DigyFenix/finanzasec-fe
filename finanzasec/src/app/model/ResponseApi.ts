@@ -1,6 +1,6 @@
 export class ResponseApi{
     static getInstance(obj:any){
-      //  console.log('ResponseAPI >>',obj.toString());
+      //  console.log('ResponseAPI >>',JSON.stringify(obj));
         let objResp = JSON.parse(JSON.stringify(obj));
         return new ResponseApi(
             objResp['ok'],

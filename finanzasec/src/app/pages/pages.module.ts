@@ -8,7 +8,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { CategoriaComponent } from './categorias/categoria/categoria.component';
 import { MovimientoComponent } from './movimiento/movimiento.component';
 import { ReporteComponent } from './reporte/reporte.component';
-import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
+import { SubcategoriaComponent } from './subcategorias/subcategoria/subcategoria.component';
 import { CuentaComponent } from './cuentas/cuenta/cuenta.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CategoriasComponent } from './categorias/categorias.component';

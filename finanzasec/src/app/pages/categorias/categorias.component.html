@@ -1,1 +1,45 @@
-<p>categorias works!</p>
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-5 fw-normal">Categorias</h1>
+    <p class="fs-6 text-muted">Las categorias pertenecen a una cuenta y agrupan los ingresos/egresos, ejemplo: Universidad, Comida, Gasolina, etc... </p>
+</div>
+
+<!-- Formulario principal donde se muestrar todos los registros -->
+<div *ngIf="!editar">
+    <!-- Buscador -->
+    <app-buscador (busqueda)="buscar($event)" (nuevo)="nuevoEditar()"></app-buscador>
+
+    <!-- Loading para cuando se esta procesando algo -->
+    <app-loading *ngIf="cargando"></app-loading>
+
+    <!-- Tabla -->
+    <div class="table-responsive">
+        <table class="table color-bordered-table inverse-bordered-table">
+            <thead>
+                <tr>
+                    <th>Descripcion</th>
+                    <th>Controles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cuenta of categorias">
+                    <td>{{cuenta.descripcion}}</td>
+                    <td>
+                        <button class="btn btn-outline-primary mr-1" (click)="nuevoEditar(cuenta)"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-outline-danger" (click)="eliminarRegistro(cuenta)"><i class="fa fa-close"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Fin Tabla -->
+</div>
+<!-- Fin Formulario principal donde se muestrar todos los registros -->
+
+<!-- Formulario de nuevo/edicion -->
+<div *ngIf="editar">
+    <app-regresar (regresar)="editar=!editar"></app-regresar>
+
+    <app-categoria [categoria]="categoria" (guardado)='guardado($event)'></app-categoria>
+
+</div>
+<!-- Fin Formulario de nuevo/edicion -->

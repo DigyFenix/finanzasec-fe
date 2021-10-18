@@ -3,6 +3,7 @@ import { EndPoint } from '../../enum/EndPoint.enum';
 import { ApiService } from '../../services/api.service';
 import { SaService } from '../../services/sa.service';
 import Cuenta from '../../model/Cuenta.IF';
+import { Variables } from '../../enum/Variables.enum';
 
 @Component({
   selector: 'app-cuentas',
@@ -10,8 +11,6 @@ import Cuenta from '../../model/Cuenta.IF';
   styleUrls: ['./cuentas.component.css']
 })
 export class CuentasComponent implements OnInit {
-
-
   private endPoint: EndPoint = EndPoint.CUENTA;
   editar: boolean = false;
 
@@ -22,7 +21,7 @@ export class CuentasComponent implements OnInit {
   cuenta: Cuenta = Cuenta.instance('');
 
   constructor(
-    private apiS: ApiService,
+    private api: ApiService,
     private sa: SaService
   ) {
 
@@ -35,7 +34,7 @@ export class CuentasComponent implements OnInit {
   //======================================================================== Metodos PARA BUSCAR de la pantalla
   cargar() {
     this.cargando = true;
-    this.apiS.cargar(this.endPoint).subscribe(resp => {
+    this.api.cargar(this.endPoint, undefined).subscribe(resp => {
       this.cargando = false;
       this.cuentas = [];
       if (resp.ok) {
@@ -43,7 +42,7 @@ export class CuentasComponent implements OnInit {
       } else {
         this.sa.error('Error', resp.error)
       }
-    }, (error ) => {
+    }, (error) => {
       this.sa.error('Error', error)
     });
   }
@@ -51,7 +50,7 @@ export class CuentasComponent implements OnInit {
   buscar(termino: string) {
     //Establesco quien solicito la sugerencia
     if (termino.length > 0) {
-      this.apiS.buscar(this.endPoint, termino).subscribe(resp => {
+      this.api.buscar(this.endPoint, termino, this.api.cuenta).subscribe(resp => {
         if (resp.ok) {
           this.cuentas = JSON.parse(JSON.stringify(resp.data));
         } else {
@@ -74,12 +73,12 @@ export class CuentasComponent implements OnInit {
 
   }
 
-  nuevoEditar(categoria?: Cuenta) {
+  nuevoEditar(cuenta?: Cuenta) {
     this.editar = !this.editar;
-    if (categoria) {
-      this.cuenta = categoria;
+    if (cuenta) {
+      this.cuenta = cuenta;
     } else {
-      this.cuenta = Cuenta.instance('');
+      this.cuenta = Cuenta.instance({ usuario: localStorage.getItem(Variables.TOKEN2) });
     }
   }
 
@@ -89,7 +88,7 @@ export class CuentasComponent implements OnInit {
   }
 
   eliminarRegistro(forma: Cuenta) {
-    this.apiS.eliminar(this.endPoint, forma.id).subscribe(resp => {
+    this.api.eliminar(this.endPoint, forma.id).subscribe(resp => {
       if (resp.ok) {
         this.sa.realizado('Registro eliminado');
         this.cargar();
