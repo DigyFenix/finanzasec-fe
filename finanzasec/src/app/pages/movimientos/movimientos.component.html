@@ -1,1 +1,59 @@
-<p>movimientos works!</p>
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-5 fw-normal">Ingreso de movimientos</h1>
+    <p class="fs-6 text-muted">
+        Los movimientos representan un gasto o un ingreso
+    </p>
+</div>
+<div class="row">
+    <div class="text-center">
+        <small class="text-muted">Cuenta actual: </small>
+    </div>
+    <span class="badge bg-secondary"> {{cuenta.descripcion}}</span>
+</div>
+<br>
+<!-- Formulario principal donde se muestrar todos los registros -->
+<form (ngSubmit)="guardar()" [formGroup]="formulario">
+    <div class="row">
+        <div class="col col-md col-sm">
+            <label for="country" class="form-label">Categorias</label>
+            <select class="form-select" formControlName="categoria" required>
+      <option *ngFor="let categoria of categorias; let i = index" [value]="i" >{{categoria.descripcion}}</option>
+    </select>
+        </div>
+
+        <div class="col col-md col-sm">
+            <label for="country" class="form-label">Sub categorias</label>
+            <select class="form-select" formControlName="subcategoria" required>
+            <option *ngFor="let subcat of subcategorias; let i = index" [value]="i" >{{subcat.descripcion}}</option>
+          </select>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col col-md col-sm">
+            <label class="control-label">Monto</label>
+            <input formControlName="monto" type="number" class="form-control">
+            <small *ngIf="fs.validar('monto')" class="text-danger">Debe ingresar minimo 5 caracteres</small>
+        </div>
+
+        <div class="col col-md col-sm">
+            <label class="control-label">Fecha</label>
+            <input formControlName="fecha" type="date" class="form-control">
+            <small *ngIf="fs.validar('fecha')" class="text-danger">Debe seleccionar la fecha</small>
+        </div>
+    </div>
+
+    <br>
+    <div class="col col-md col-sm">
+        <label class="control-label">Descripcion</label>
+        <input formControlName="descripcion" type="text" class="form-control">
+    </div>
+
+    <br>
+    <div class="text-center">
+        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Insertar movimiento</button>
+    </div>
+
+</form>
+<!-- Fin Formulario principal donde se muestrar todos los registros -->
