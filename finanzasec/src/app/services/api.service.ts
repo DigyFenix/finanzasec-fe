@@ -8,13 +8,14 @@ import { catchError, map } from 'rxjs/operators';
 import { ResponseApi } from '../model/ResponseApi';
 import { Variables } from '../enum/Variables.enum';
 import { EndPoint } from '../enum/EndPoint.enum';
+import { SocialAuthService } from 'angularx-social-login';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   private urlApi: string = environment.urlApi;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,  private socialAuthService: SocialAuthService) { }
 
   get urlImagenLocal(): string {
     return '../../assets/images/';
@@ -29,6 +30,10 @@ export class ApiService {
 
   get cuenta() {
     return localStorage.getItem(Variables.CUENTA_DEFAULT) || '';
+  }
+  get isLogin() {
+    let token = localStorage.getItem(Variables.TOKEN_LOCALSTORAGE);
+    return (token && token.length > 0) ? true : false;
   }
 
   private get headers() {
@@ -45,7 +50,8 @@ export class ApiService {
   }
 
   cerrarSesion() {
-    localStorage.delete(Variables.TOKEN_LOCALSTORAGE);
+    localStorage.removeItem(Variables.TOKEN_LOCALSTORAGE);
+    localStorage.removeItem(Variables.CUENTA_DEFAULT);
     this.router.navigateByUrl("/" + EndPoint.LOGIN);
   }
 

@@ -1,1 +1,33 @@
-<p>movimiento works!</p>
+<!-- Formulario principal donde se muestrar todos los registros -->
+
+<div class="row">
+    <div class="col col-md col-sm">
+        <label class="form-label">Categoria</label>
+        <input class="form-control" value={{movimiento.categoria}}/>
+    </div>
+
+    <div class="col col-md col-sm">
+        <label class="form-label">Sub categorias</label>
+        <input class="form-control" value={{movimiento.subcategoria}}/>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col col-md col-sm">
+        <label class="control-label">Monto</label>
+        <input class="form-control" value={{movimiento.monto}}/>
+    </div>
+
+    <div class="col col-md col-sm">
+        <label class="control-label">Fecha</label>
+        <input class="form-control" value={{movimiento.fecha}}/>
+    </div>
+</div>
+
+<br>
+<div class="col col-md col-sm">
+    <label class="control-label">Descripcion</label>
+    <input class="form-control" value={{movimiento.descripcion}}/>
+</div>
+<!-- Fin Formulario principal donde se muestrar todos los registros -->

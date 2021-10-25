@@ -1,1 +1,98 @@
-<p>reporte works!</p>
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">Reporte</h1>
+    <p class="fs-5 text-muted">
+        Seleccione un rango de fechas y consulte sus movimientos
+    </p>
+</div>
+<div class="row">
+    <div class="text-center">
+        <small class="text-muted">Cuenta actual: </small>
+    </div>
+    <span class="badge bg-secondary"> {{cuenta.descripcion}}</span>
+</div>
+<br>
+
+<form (ngSubmit)="consultar()" [formGroup]="formulario">
+    <div class="row">
+        <label class="control-label">Fecha Inicial</label>
+        <input formControlName="fechaInicial" type="date" class="form-control">
+        <small *ngIf="fs.validar('fechaInicial')" class="text-danger">Debe seleccionar la fecha final</small>
+    </div>
+    <div class="row mt-2">
+        <label class="control-label">Fecha Final</label>
+        <input formControlName="fechaFinal" type="date" class="form-control">
+        <small *ngIf="fs.validar('fechaFinal')" class="text-danger">Debe seleccionar la fecha final</small>
+
+    </div>
+    <div class="row mt-2">
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary"> <i class="fa fa-check"></i> Consultar</button>
+        </div>
+    </div>
+</form>
+
+<hr>
+<div class="row">
+    <div class="col col-md col-sm text-center">
+        <div class="row">
+            <div class="col">
+                <p class="fs-3">Ingresos <span class="badge bg-success"> {{ingresos | number}}</span></p>
+            </div>
+            <div class="col">
+                <p class="fs-3">Gastos <span class="badge bg-danger"> {{gastos | number}}</span></p>
+            </div>
+            <div class="col">
+                <p class="fs-3">Balance <span class="badge bg-primary">{{ingresos + gastos | number}} </span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<br>
+<!-- Formulario principal donde se muestrar todos los registros -->
+<div *ngIf="!editar">
+
+    <!-- Loading para cuando se esta procesando algo -->
+    <app-loading *ngIf="cargando"></app-loading>
+
+    <!-- Tabla -->
+    <div class="table-responsive">
+        <table class="table color-bordered-table inverse-bordered-table">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Subcategoria</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Tipo</th>
+                    <th>Controles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let mov of movimientos">
+                    <td>{{mov.categoria}}</td>
+                    <td>{{mov.subcategoria}}</td>
+                    <td>{{mov.fecha |date}}</td>
+                    <td>{{mov.monto}}</td>
+                    <td>{{mov.tipo}}</td>
+                    <td>
+                        <button class="btn btn-outline-primary mr-1" (click)="verMovimiento(mov)"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-outline-danger" (click)="eliminarRegistro(mov)"><i class="fa fa-close"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Fin Tabla -->
+</div>
+<!-- Fin Formulario principal donde se muestrar todos los registros -->
+
+<!-- Formulario de nuevo/edicion -->
+<div *ngIf="editar">
+    <app-regresar (regresar)="editar=!editar"></app-regresar>
+
+    <app-movimiento [movimiento]="movimiento"></app-movimiento>
+
+</div>
+<!-- Fin Formulario de nuevo/edicion -->

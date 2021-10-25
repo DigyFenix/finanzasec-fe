@@ -25,18 +25,19 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.socialAuthService.authState.subscribe((user) => {
       // let data = { token: user.idToken }
-      let data = { token: user.idToken }
-      this.api.log('Token google', data)
-      this.api.iniciarSesion(data).subscribe((data) => {
-        if (data.ok) {
-          let obj:any = data.data;
-          this.api.log('Response login!!', obj)
-          localStorage.setItem(Variables.TOKEN_LOCALSTORAGE, '' +  obj["token"]);
-          this.router.navigateByUrl('/' + EndPoint.PERFIL);
-        } else {
-          this.sa.error('Error al iniciar sesion', JSON.stringify(data.error))
-        }
-      })
+      this.api.log('ngOnInit', user)
+      if (user) {
+        let data = { token: user.idToken }
+        this.api.iniciarSesion(data).subscribe((data) => {
+          if (data.ok) {
+            let obj: any = data.data;
+            localStorage.setItem(Variables.TOKEN_LOCALSTORAGE, '' + obj["token"]);
+            this.router.navigateByUrl('/' + EndPoint.PERFIL);
+          } else {
+            this.sa.error('Error al iniciar sesion', JSON.stringify(data.error))
+          }
+        })
+      }
     });
   }
 
